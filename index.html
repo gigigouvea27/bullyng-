@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Silêncio Que Ecoa - Conscientização</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        /* Efeito de scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: grayscale(100%);
+            transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero:hover .hero-image {
+            filter: grayscale(0%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 32px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 0%, #aaaaaa 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: #d0d0d0;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn:hover {
+            background: #ffffff;
+            color: #0a0a0a;
+            border-color: #ffffff;
+        }
+
+        /* ========== SEÇÃO DE CARDS ========== */
+        .cards-section {
+            padding: 80px 0;
+            background: #0f0f0f;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 56px;
+            position: relative;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #888;
+            margin: 16px auto 0;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+        }
+
+        .card-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+            display: block;
+        }
+
+        .card:hover .card-img {
+            filter: grayscale(0%);
+        }
+
+        .card-content {
+            padding: 28px 24px 32px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* ========== SEÇÃO ABSTRATA (BACKGROUND/ARTE) ========== */
+        .abstract-section {
+            position: relative;
+            padding: 100px 0;
+            background: #050505;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .abstract-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+            filter: grayscale(100%) contrast(1.2);
+            transition: all 0.8s ease;
+            z-index: 0;
+        }
+
+        .abstract-section:hover .abstract-bg {
+            filter: grayscale(0%) contrast(1.1);
+            opacity: 0.55;
+        }
+
+        .abstract-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(8px);
+            padding: 48px 32px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .abstract-content h2 {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            margin-bottom: 20px;
+        }
+
+        .abstract-content p {
+            font-size: 1.05rem;
+            color: #ccc;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #080808;
+            padding: 48px 24px 32px;
+            text-align: center;
+            border-top: 1px solid #1f1f1f;
+        }
+
+        .footer p {
+            color: #6b6b6b;
+            font-size: 0.85rem;
+        }
+
+        /* ========== RESPONSIVIDADE ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            .cards-section {
+                padding: 48px 0;
+            }
+            .card-content {
+                padding: 20px 18px 24px;
+            }
+            .abstract-content {
+                margin: 0 16px;
+                padding: 32px 20px;
+            }
+            .btn {
+                padding: 12px 28px;
+            }
+        }
+
+        /* Efeito de carregamento suave */
+        img {
+            transition: filter 0.4s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <!-- IMAGEM PRINCIPAL (HERO) - substitua o src pelo link da sua imagem gerada -->
+        <img class="hero-image" 
+             src="https://picsum.photos/id/104/1920/1080" 
+             alt="Jovem solitário no corredor escolar - atmosfera cinzenta e impactante"
+             loading="eager">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>SILÊNCIO QUE ECOA</h1>
+            <p>Mais de 70% dos jovens já silenciaram suas dores por medo ou vergonha. <br>
+            Quebrar o silêncio é o primeiro passo. Você não está sozinho.</p>
+            <a href="#cards" class="btn">CONHEÇA MAIS</a>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE CARDS (APOIO E CONSCIENTIZAÇÃO) -->
+    <section class="cards-section" id="cards">
+        <div class="container">
+            <h2 class="section-title">Acolhimento e Ação</h2>
+            <div class="cards-grid">
+                
+                <!-- CARD 1 - Acolhimento -->
+                <div class="card">
+                    <img class="card-img" 
+                         src="https://picsum.photos/id/48/600/450" 
+                         alt="Mãos se ajudando - apoio emocional">
+                    <div class="card-content">
+                        <h3>Acolhimento</h3>
+                        <p>Escuta ativa sem julgamento. Um simples "estou aqui" pode salvar vidas. Saiba como oferecer apoio real a quem precisa.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 2 - Conscientização -->
+                <div class="card">
+                    <img class="card-img" 
+                         src="https://picsum.photos/id/155/600/450" 
+                         alt="Conversa significativa - conscientização">
+                    <div class="card-content">
+                        <h3>Conscientização</h3>
+                        <p>Entenda os sinais silenciosos. Depressão e ansiedade não têm cara, mas têm tratamento. Informação é prevenção.</p>
+                    </div>
+                </div>
+
+                <!-- CARD 3 - Recursos -->
+                <div class="card">
+                    <img class="card-img" 
+                         src="https://picsum.photos/id/276/600/450" 
+                         alt="Recursos de ajuda - canais de suporte">
+                    <div class="card-content">
+                        <h3>Canais de Ajuda</h3>
+                        <p>CVV: 188 (24h) · CAPS · Centro de Valorização da Vida. Anônimo, gratuito e sigiloso. Você merece ser ouvido.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO ABSTRATA (BACKGROUND ARTÍSTICO) -->
+    <section class="abstract-section">
+        <img class="abstract-bg" 
+             src="https://picsum.photos/id/30/1920/800" 
+             alt="Arte abstrata: silêncio e ruído - silhuetas humanas">
+        <div class="abstract-content">
+            <h2>O barulho do silêncio</h2>
+            <p>Por trás de cada olhar vago, existe uma batalha invisível. A arte de escutar é também uma arte de enxergar além da superfície. Quebre o ruído. Escute o silêncio.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 · Silêncio Que Ecoa · Campanha de conscientização sobre saúde mental jovem.</p>
+            <p style="margin-top: 12px;">#QuebreOSilêncio | Você é importante.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
